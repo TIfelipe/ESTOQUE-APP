@@ -1,0 +1,124 @@
+#:kivy 2.3.0
+
+ScreenManager:
+    TelaPrincipal:
+    TelaEditar:
+    TelaVisualizar:
+
+<TelaPrincipal>:
+    name: 'principal'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Button:
+            text: 'Adicionar Produto'
+            size_hint_y: None
+            height: 50
+            on_release:
+                root.manager.current = 'adicionar'
+
+        Button:
+            text: 'Visualizar Estoque'
+            size_hint_y: None
+            height: 50
+            on_release:
+                root.manager.current = 'visualizar'
+
+        ScrollView:
+            id: scroll_view
+            BoxLayout:
+                id: lista_produtos
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+
+<TelaEditar>:
+    name: 'editar'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        TextInput:
+            id: input_nome
+            hint_text: 'Nome do Produto'
+            multiline: False
+        TextInput:
+            id: input_codigo_barras
+            hint_text: 'Código de Barras'
+            multiline: False
+        TextInput:
+            id: input_quantidade
+            hint_text: 'Quantidade'
+            input_filter: 'int'
+            multiline: False
+        Button:
+            text: 'Salvar'
+            on_release: root.salvar_produto()
+        Button:
+            text: 'Cancelar'
+            on_release: root.ir_para_tela_principal()
+
+<TelaVisualizar>:
+    name: 'visualizar'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Button:
+            text: 'Voltar'
+            size_hint_y: None
+            height: 50
+            on_release:
+                root.voltar_para_principal()
+
+        ScrollView:
+            id: scroll_view
+            BoxLayout:
+                id: lista_produtos
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+
+<TelaBuscar>:
+    name: 'buscar'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        # Layout para os campos de busca e botões
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+            TextInput:
+                id: input_nome
+                hint_text: 'Nome do Produto'
+                multiline: False
+                size_hint_x: 0.7
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_x: 0.3
+                Button:
+                    text: 'Buscar'
+                    size_hint_x: 0.5
+                    on_release: root.buscar_produto()
+                Button:
+                    text: 'Limpar'
+                    size_hint_x: 0.5
+                    on_release: root.limpar()
+
+
+        # ScrollView para resultados
+        ScrollView:
+            id: scroll_view
+            BoxLayout:
+                id: lista_resultados
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+
+
